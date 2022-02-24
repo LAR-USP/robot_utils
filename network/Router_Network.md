@@ -39,3 +39,37 @@ Similarly, you can create a .sh file to automate this
 source /path/to/env.sh
 roscore
 ```
+
+#### Using ifmetric to set network priority
+
+First see the metrics using route command:
+
+```
+$ route -n
+
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         10.42.0.1       0.0.0.0         UG    100    0        0 eth0
+0.0.0.0         10.42.0.2       0.0.0.0         UG    600    0        0 wlan0
+```
+
+Here, eth0 has lower metric, so it will be preferred over wlan0. If you want to prefer wlan0, then lower its metric:
+
+```
+sudo ifmetric wlan0 50
+```
+
+```
+$ route -n
+
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         10.42.0.2       0.0.0.0         UG    50     0        0 wlan0
+0.0.0.0         10.42.0.1       0.0.0.0         UG    100    0        0 eth0
+```
+
+[Adapted From Here](https://superuser.com/questions/331720/how-do-i-set-the-priority-of-network-connections-in-ubuntu)
+
+
+
+
