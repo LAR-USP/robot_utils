@@ -1,0 +1,17 @@
+# ~/.tmuxinator/ap.yml
+
+name: ap
+root: ~/
+
+# Runs before everything. Use it to start daemons etc.
+pre_window: source /etc/ubiquity/ap_env.sh
+
+windows:
+  - rosmaster:
+      panes:
+        - roscore
+  - pioneer:
+      pre: sleep 10
+      root: /home/ubuntu/ros/pioneer_ws
+      panes:
+        - source devel/setup.bash && roslaunch pioneer_bringup pioneer_bringup.launch
